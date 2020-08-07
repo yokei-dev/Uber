@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Myapp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <%if current_driver%>
+  <p><%= link_to "ログアウト",destroy_driver_session_path, method: :delete %> 
+  <%elsif current_customer%>
+  <p><%= link_to "ログアウト",destroy_customer_session_path, method: :delete %> 
+  <%else%>
+  <p><%= link_to "ドライバーログイン", new_driver_session_path %></p>
+  <p><%= link_to "ユーザーログイン", new_customer_session_path %></p>
+  <%end%>
+  
+    <%= yield %>
+  </body>
+</html>

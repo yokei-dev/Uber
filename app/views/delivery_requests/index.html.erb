@@ -1,0 +1,16 @@
+<%@requests.each do |request|%>
+    <p>ユーザー名：<%=request.customer.name%></p>
+    <p>現在地：<%=request.departure%></p>
+    <p>目的地：<%=request.destination%></p>
+
+    <%=form_with(model:request, local:true) do |f|%>
+        
+        <div class="form-group">
+          <%= f.hidden_field :status, :value => 1 %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "承認する", class: "btn btn-primary w-100" %>
+        </div>
+    <% end %>
+<% end %>
