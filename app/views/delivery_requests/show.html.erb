@@ -1,0 +1,17 @@
+<h1>配車状況</h1>
+<%if @request.status == 0%>
+    <h1>配車未完了</h1>
+    <%=form_with(model:@request, local:true) do |f|%>
+        
+        <div class="form-group">
+          <%= f.hidden_field :status, :value => 3 %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "キャンセル", class: "btn btn-primary w-100" %>
+        </div>
+    <% end %>
+<%elsif @request.status == 1%>
+    <h1>配車完了</h1>
+<%end%>
+

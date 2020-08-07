@@ -6,5 +6,7 @@ class Driver < ApplicationRecord
 
          validates :name, presence: true, length: { maximum: 50 }
 
+         has_many :relationships
+         has_many :customer_people, through: :relationships, source: :customer
 
 end

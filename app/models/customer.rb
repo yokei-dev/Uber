@@ -6,4 +6,7 @@ class Customer < ApplicationRecord
 
          validates :name, presence: true, length: { maximum: 50 }
   has_many :delivery_requests
+  has_many :relationships
+  has_many :driver_people, through: :relationships, source: :driver
+
 end

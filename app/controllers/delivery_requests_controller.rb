@@ -8,6 +8,10 @@ class DeliveryRequestsController < ApplicationController
         @request = Customer.find(current_customer["id"]).delivery_requests.build
     end
 
+    def show
+        @requst = DeliveryRequest.find(params[:id])
+    end
+
     def create
         @request = DeliveryRequest.find(current_customer["id"]).delivery_requests.build(request_params)
         if @request.save
@@ -19,7 +23,9 @@ class DeliveryRequestsController < ApplicationController
 
     def update
         @request = DeliveryRequest.find(params[:id])
-        if @request.update(request_params)
+        @relationship = current_driver.relationships.build(customer_id: params[:id])
+        @relationship.cost = @request.cost
+        if @request.update(request_params) && @relationship.save
             redirect_to root_url
         else
             render :index
