@@ -1,7 +1,7 @@
 <h1>Uber</h1>
 
 <%if current_customer%>
-<%= link_to "配車する", new_delivery_requests_path  %>
+<%= link_to "配車する", new_delivery_request_path  %>
 <%elsif current_driver%>
 <%= link_to "乗客を探す", delivery_requests_path %>
 <%end%>

@@ -23,12 +23,17 @@ class DeliveryRequestsController < ApplicationController
 
     def update
         @request = DeliveryRequest.find(params[:id])
-        @relationship = current_driver.relationships.build(customer_id: params[:id])
-        @relationship.cost = @request.cost
-        if @request.update(request_params) && @relationship.save
+        if @request.status == 1
+            @relationship = current_driver.relationships.build(customer_id: params[:id])
+            @relationship.cost = @request.cost
+            if @request.update(request_params) && @relationship.save
+                redirect_to root_url
+            else
+                render :index
+            end
+        elsif @request.status == 3
+            @relationship.destroy
             redirect_to root_url
-        else
-            render :index
         end
     end
 
