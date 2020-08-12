@@ -1,0 +1,7 @@
+<h1>使用履歴</h1>
+<% if @customers.present? %>
+    <% @customers.each do |customer| %>
+        <p>ユーザー名：<%= customer.name %></p>
+        <p>______________________________</p>
+    <% end %>
+<% end %>

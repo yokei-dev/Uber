@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_121316) do
+ActiveRecord::Schema.define(version: 2020_08_11_055922) do
+
+  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "customer_id"
+    t.bigint "driver_id"
+    t.integer "state", null: false
+    t.integer "got"
+    t.integer "lost"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_accounts_on_customer_id"
+    t.index ["driver_id"], name: "index_accounts_on_driver_id"
+  end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -52,13 +64,15 @@ ActiveRecord::Schema.define(version: 2020_08_07_121316) do
   create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.bigint "driver_id", null: false
-    t.integer "cost", null: false
+    t.integer "cost"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_relationships_on_customer_id"
     t.index ["driver_id"], name: "index_relationships_on_driver_id"
   end
 
+  add_foreign_key "accounts", "customers"
+  add_foreign_key "accounts", "drivers"
   add_foreign_key "delivery_requests", "customers"
   add_foreign_key "relationships", "customers"
   add_foreign_key "relationships", "drivers"

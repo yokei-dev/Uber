@@ -1,0 +1,29 @@
+<% unless Account.where(customer_id: current_customer["id"]) %>
+    <h1><%= link_to "口座を登録する", new_account_path %></h1>
+<% else %>
+    <h1>支払い画面</h1>
+    <p>残金：<%= Account.where(customer_id: current_customer["id"]).last.state %></p>
+    <% unless DeliveryRequest.where(customer_id: current_customer["id"]).last.status == 2 %>
+  
+      <p>支払い額：<%= @request.cost %></p>
+      <%= form_with scope: :account, url: customers_account_create_path do |f| %>
+          
+          <div class="form-group">
+            <%= f.hidden_field :lost, :value => @request.cost %>
+          </div>
+
+
+          <%= fields_for @request do |c| %>
+  
+            <div class="form-group">
+              <%= c.hidden_field :status, :value => 2 %>
+            </div>
+
+          <% end %>
+
+          <div class="actions">
+            <%= f.submit "支払いをする", class: "btn btn-primary w-100" %>
+          </div>
+      <% end %>
+    <% end %>
+<% end %>

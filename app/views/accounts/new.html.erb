@@ -1,0 +1,37 @@
+<% if current_customer %>
+    <% unless Account.where(customer_id: current_customer["id"]).present? %>
+        <h1>口座登録</h1>
+    <% else %>
+        <h1>残金：<%= current_customer.accounts.last.state %>円</h1>
+        <h1>口座入金</h1>
+    <% end %>
+    <%= form_with(model:@account_customer, local: true) do |f| %>
+        <div class="form-group">
+            <%= f.number_field :got, placeholder: "入金額", class: "form-control"  %>
+        </div>
+    
+        <div class="actions">
+             <% unless Account.where(customer_id: current_customer["id"]) %>
+                <%= f.submit "登録", class: "btn btn-primary w-100" %>
+            <% else %>
+                <%= f.submit "入金", class: "btn btn-primary w-100" %>
+            <% end %>
+        </div>
+    <% end %>
+<% elsif current_driver %>
+    <% unless Account.where(driver_id: current_driver["id"]).present? %>
+        <h1>口座登録</h1>
+        <%= form_with(model:@account_driver, local: true) do |f| %>
+            <div class="form-group">
+                <%= f.hidden_field :got, :value => 0 %>
+            </div>
+        
+            <div class="actions">
+                <%= f.submit "登録", class: "btn btn-primary w-100" %>
+            </div>
+        <% end %>
+    <% else %>
+        <h1>登録済み</h1>
+        <h1>売り上げ：<%= current_driver.accounts.last.state %>円</h1>
+    <% end %>
+<% end %>

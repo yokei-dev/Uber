@@ -1,16 +1,32 @@
-<%@requests.each do |request|%>
-    <p>ユーザー名：<%=request.customer.name%></p>
-    <p>現在地：<%=request.departure%></p>
-    <p>目的地：<%=request.destination%></p>
+<% if @requests %>
 
-    <%=form_with(model:request, local:true) do |f|%>
-        
-        <div class="form-group">
-          <%= f.hidden_field :status, :value => 1 %>
-        </div>
+  <% @requests.each do |request| %>
 
-        <div class="actions">
-          <%= f.submit "承認する", class: "btn btn-primary w-100" %>
-        </div>
+    <% if request.status == 0 %>
+      <p>ユーザー名：<%=request.customer.name%></p>
+        <p>現在地：<%=request.departure%></p>
+        <p>目的地：<%=request.destination%></p>
+
+        <%=form_with(model:request, local:true) do |f|%>
+            
+            <div class="form-group">
+              <%= f.hidden_field :status, :value => 1 %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "承認する", class: "btn btn-primary w-100" %>
+            </div>
+        <% end %>
+        <p>_______________________________________________________</p>
+    <% elsif request.status == 1 %>
+      <h3>配車済み</h3>
+      <p>ユーザー名：<%=request.customer.name%></p>
+      <p>現在地：<%=request.departure%></p>
+      <p>目的地：<%=request.destination%></p>
+      <p>_______________________________________________________</p>
     <% end %>
+  
+  <% end %>
+<% else %>
+  <h1>乗車希望者がいません</h1>
 <% end %>

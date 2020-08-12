@@ -14,3 +14,17 @@
  *= require_self
  */
  @import "bootstrap";
+ @import "layouts/navbar";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+ .driver {
+     background-color:#CEF9DC;
+ }
+
+ .customer {
+     background-color: #FFDBC9;
+ }

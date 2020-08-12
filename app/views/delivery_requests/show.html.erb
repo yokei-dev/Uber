@@ -1,17 +1,40 @@
-<h1>配車状況</h1>
-<%if @request.status == 0%>
-    <h1>配車未完了</h1>
-    <%=form_with(model:@request, local:true) do |f|%>
-        
-        <div class="form-group">
-          <%= f.hidden_field :status, :value => 3 %>
-        </div>
+<% if current_customer %>
+  <div style="margin-bottom:100px;">
+    <h1>配車状況</h1>
+  </div>
+  <% if @request.present? %>
+    <%if @request.status == 0%>
+        <h3>配車未完了</h3>
+        <%=form_with(model:@request, local:true) do |f|%>
+            
+            <div class="form-group">
+              <%= f.hidden_field :status, :value => 3 %>
+            </div>
 
-        <div class="actions">
-          <%= f.submit "キャンセル", class: "btn btn-primary w-100" %>
-        </div>
+            <div class="actions">
+              <%= f.submit "キャンセル", class: "btn btn-primary w-100" %>
+            </div>
+        <% end %>
+    <%elsif @request.status == 1%>
+        <h3>配車完了</h3>
+        <h3><%= link_to "支払い画面", customers_account_new_path %></h3>
+    <%end%>
+  <% else %>
+        <h3>配車予定なし</h3>
+  <% end %>
+
+<% elsif current_driver %>
+  <div style="margin-bottom:100px;">
+    <h1>入金状況</h1>
+  </div>
+  <% if @request.present? %>
+    <% if @request.status == 2 %>
+      <h3>入金完了</h3>
+    <% elsif @request.status == 1 %>
+      <h3>未入金</h3>  
+      <h3>ユーザー名：<%= Customer.find_by(id: @request.customer_id).name %></h3>  
+    <% else %>
+      <h3>配車をしていません</h3>  
     <% end %>
-<%elsif @request.status == 1%>
-    <h1>配車完了</h1>
-<%end%>
-
+  <% end %>
+<% end %>

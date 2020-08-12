@@ -8,5 +8,5 @@ class Driver < ApplicationRecord
 
          has_many :relationships
          has_many :customer_people, through: :relationships, source: :customer
-
+         has_many :accounts
 end

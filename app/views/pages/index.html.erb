@@ -1,7 +1,25 @@
 <h1>Uber</h1>
 
 <%if current_customer%>
-<%= link_to "配車する", new_delivery_request_path  %>
+    <p><%= link_to "配車する", new_delivery_request_path  %></p>
+    <p><%= link_to "配車状況確認", delivery_request_path(@request) %></p>
+    <p><%= link_to "使用履歴", customer_path(current_customer)  %></p>
+    <% unless current_customer.accounts.present? %>
+        <p><%= link_to "口座を登録する", new_account_path %></p>
+    <% else %>
+        <p><%= link_to "残高を確認or入金する", new_account_path %></p>
+        <p><%= link_to "口座履歴", accounts_path %></p>
+    <% end %>
 <%elsif current_driver%>
-<%= link_to "乗客を探す", delivery_requests_path %>
+    <p><%= link_to "乗客を探す", delivery_requests_path %></p>
+    <% if @request.present? %>
+        <p><%= link_to "入金状況確認", delivery_request_path(@request) %></p>
+    <% end %>
+    <p><%= link_to "使用履歴", driver_path(current_driver)  %></p>
+    <% unless current_driver.accounts.present? %>
+        <p><%= link_to "口座を登録する", new_account_path %></p>
+    <% else %>
+        <p><%= link_to "口座を確認する", new_account_path %></p>
+        <p><%= link_to "口座履歴", accounts_path %></p>
+    <% end %>
 <%end%>

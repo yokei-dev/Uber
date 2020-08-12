@@ -1,0 +1,12 @@
+
+<h1>口座履歴</h1>
+    <% if @accounts.present? %>
+        <% @accounts.each do |account| %>
+            <p>残高：<%= account.state %></p>
+            <p>入金：<%= account.got %></p>
+            <p>出金：<%= account.lost %></p>
+            <p>______________________________</p>
+        <% end %>
+    <% else %>
+        <%= link_to "口座を登録する", new_account_path %>
+<% end %>

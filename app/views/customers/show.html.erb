@@ -1,0 +1,7 @@
+<h1>使用履歴</h1>
+<% if @drivers.present? %>
+    <% @drivers.each do |driver| %>
+        <p>ドライバー名：<%= driver.name %></p>
+        <p>______________________________</p>
+    <% end %>
+<% end %>

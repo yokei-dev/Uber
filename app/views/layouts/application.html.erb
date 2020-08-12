@@ -9,16 +9,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-  <%if current_driver%>
-  <p><%= link_to "ログアウト",destroy_driver_session_path, method: :delete %> 
-  <%elsif current_customer%>
-  <p><%= link_to "ログアウト",destroy_customer_session_path, method: :delete %> 
-  <%else%>
-  <p><%= link_to "ドライバーログイン", new_driver_session_path %></p>
-  <p><%= link_to "ユーザーログイン", new_customer_session_path %></p>
-  <%end%>
-  
+  <body class="<%= 'customer' if current_customer.present? %> <%= 'driver' if current_driver.present? %>">
+
+    <%= render "layouts/navbar" %>
     <%= yield %>
-  </body>
+
+    </body>
 </html>

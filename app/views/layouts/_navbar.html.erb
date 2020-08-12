@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <%= link_to "ルートページに戻る", root_path, class: "navbar__brand navbar__mainLogo" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-md-auto align-items-center">
+        <%if current_driver%>
+            <li><button type="button" class="btn btn-outline-primary"><%= link_to "ログアウト",destroy_driver_session_path, method: :delete %></button></li>
+            <li><button type="button" class="btn btn-outline-primary">ドライバー名：<%= current_driver.name %>
+        <%elsif current_customer%>
+            <li><button type="button" class="btn btn-outline-primary"><%= link_to "ログアウト",destroy_customer_session_path, method: :delete %></button></li>
+            <li><button type="button" class="btn btn-outline-primary">ユーザー名：<%= current_customer.name %></button></li>
+        <%else%>
+            <li><button type="button" class="btn btn-outline-primary"><%= link_to "ドライバーログイン", new_driver_session_path %></button></li>
+            <li><button type="button" class="btn btn-outline-primary"><%= link_to "ユーザーログイン", new_customer_session_path %></button></li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</nav>

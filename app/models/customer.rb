@@ -8,5 +8,5 @@ class Customer < ApplicationRecord
   has_many :delivery_requests
   has_many :relationships
   has_many :driver_people, through: :relationships, source: :driver
-
+  has_many :accounts
 end
